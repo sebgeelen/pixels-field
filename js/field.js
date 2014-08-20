@@ -133,7 +133,7 @@
         currentX  = currentPx.data('x'),
         currentY  = currentPx.data('y'),
         targetPx, targetX, targetY, x, y;
-    console.log("light on");
+
     for (y = (range * -1); y <= range; y++) {
       for (x = (range * -1); x <= range; x++) {
         if( Math.abs(x) + Math.abs(y) > range + 1) {
@@ -150,7 +150,6 @@
     //setTimeout(_matchFireOut, 5000);
   }
   function _matchFireOut() {
-    console.log("light off");
     container.find('.highlighted').removeClass('highlighted');
   }
 
