@@ -1,7 +1,7 @@
 
 #field {
   padding: 20px;
-  background-color: #f1f1f1;
+  background-color: #606060;
   text-align: center;
 }
 
@@ -9,6 +9,44 @@
   display: inline-block;
   width: 10px;
   height: 10px;
-  background-color: #999;
+  background-color: #666;
   margin: 2px;
+
+  transition: background-color .7s linear;
+}
+
+.highlighted {
+  background-color: #aaa;
+  transition: background-color 1s linear;
+  &.bonus {
+    background-color: #a9c7ab;
+  }
+  &.malus {
+    //background-color: #be928b; // invisibru !!
+  }
+  &.wall {
+    background-color: #444;
+  }
+}
+
+.visited {
+  background-color: #ccc;
+  transition: background-color .2s linear;
+  &.bonus {
+    background-color: #269030;
+  }
+  &.malus {
+    background-color: #bd402c;
+  }
+  &.wall {
+    background-color: #222;
+  }
+}
+
+.px.px-end {
+  background-color: #194e70;
+}
+.px.cpx {
+  transition: background-color .1s linear;
+  background-color: #1a82c4;
 }
