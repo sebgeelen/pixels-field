@@ -1,11 +1,12 @@
 (function(context, namespace) {
   var options = {
-    "container" : null,
-    "col"       : 9,
-    "row"       : 40,
-    "start"     : "4:4",
-    "end"       : "4:35",
-    "matchAvailable" : 2
+    "container"         : null,
+    "col"               : 9,
+    "row"               : 40,
+    "start"             : "4:4",
+    "end"               : "4:35",
+    "matchAvailable"    : 2,
+    "torchRange"        : 1
   };
 
   var _field    = context[namespace],
@@ -108,14 +109,43 @@
 
     switch(type) {
       case 2:
-        _lightAMatch(5);
+        _applyBonusToPx(px);
         break;
       case 3:
-        _matchFireOut();
+        _applyMalusToPx(px);
         break;
       default:
-        _lightAMatch(1);
+        _lightAMatch(options.torchRange);
         break;
+    }
+  }
+
+  function _applyBonusToPx(px) {
+    var r = Math.random();
+    if(r > 0.4) {
+      _lightAMatch(options.torchRange + 2);
+    } else if(r > 0.2) {
+      _lightAMatch(options.torchRange + 4);
+    } else {
+      options.torchRange ++;
+      _lightAMatch(options.torchRange);
+    }
+  }
+
+  function _applyMalusToPx(px) {
+    var r = Math.random();
+    if(r > 0.2) {
+      _matchFireOut();
+    } else {
+      // karma is a bitch
+      _matchFireOut();
+      _removeVisited();
+      options.torchRange --;
+    }
+
+    if(options.torchRange < 0) {
+      //prevent range to become negative
+      options.torchRange = 0;
     }
   }
   /* bind keys */
@@ -140,6 +170,9 @@
       case "left":
         e.preventDefault();
         _move(-1, 0);
+        break;
+      case " ":
+        _reset();
         break;
       case "l": // light a match
         e.preventDefault();
@@ -183,6 +216,12 @@
   }
   function _matchFireOut() {
     container.find('.highlighted').removeClass('highlighted');
+    // keep light around the end
+    _lightAMatch(2, container.find('.px-end'));
+  }
+
+  function _removeVisited() {
+    container.find('.visited').removeClass('visited');
   }
 
   /* move the curent pixels on x and y axis */
@@ -195,8 +234,8 @@
         targetPx  = container.find('#px' + targetX + '_' + targetY);
 
     if(targetPx.length > 0) {
-      if(targetPx.data("type") === 1) {
-        // wall
+      if(targetPx.hasClass("wall")) {
+        // don't move ibto wall wall
         targetPx.addClass("visited");
       } else {
         currentPx.removeClass('cpx').addClass('visited');
