@@ -1,7 +1,7 @@
 
 #field {
   padding: 20px;
-  background-color: #606060;
+  background-color: #444;
   text-align: center;
 }
 
@@ -9,15 +9,14 @@
   display: inline-block;
   width: 10px;
   height: 10px;
-  background-color: #666;
+  background-color: #444;
   margin: 2px;
 
-  transition: background-color .7s linear;
+  transition: background-color .3s linear;
 }
 
 .highlighted {
   background-color: #aaa;
-  transition: background-color 1s linear;
   &.bonus {
     background-color: #a9c7ab;
   }
@@ -25,13 +24,12 @@
     //background-color: #be928b; // invisibru !!
   }
   &.wall {
-    background-color: #444;
+    background-color: #222;
   }
 }
 
 .visited {
   background-color: #ccc;
-  transition: background-color .2s linear;
   &.bonus {
     background-color: #269030;
   }

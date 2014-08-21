@@ -1,8 +1,8 @@
-#field{padding:20px;background-color:#606060;text-align:center;}
-.px{display:inline-block;width:10px;height:10px;background-color:#666;margin:2px;transition:background-color 0.7s linear;}
-.highlighted{background-color:#aaa;transition:background-color 1s linear;}.highlighted.bonus{background-color:#a9c7ab;}
-.highlighted.wall{background-color:#444;}
-.visited{background-color:#ccc;transition:background-color 0.2s linear;}.visited.bonus{background-color:#269030;}
+#field{padding:20px;background-color:#444;text-align:center;}
+.px{display:inline-block;width:10px;height:10px;background-color:#444;margin:2px;transition:background-color 0.3s linear;}
+.highlighted{background-color:#aaa;}.highlighted.bonus{background-color:#a9c7ab;}
+.highlighted.wall{background-color:#222;}
+.visited{background-color:#ccc;}.visited.bonus{background-color:#269030;}
 .visited.malus{background-color:#bd402c;}
 .visited.wall{background-color:#222;}
 .px.px-end{background-color:#194e70;}

@@ -55,10 +55,39 @@
         currentRow.append(currentPx);
       }
     }
+    _buildWall();
+    // light around the start
+    _lightAMatch(1);
+    // light around the end
+    _lightAMatch(2, container.find('.px-end'));
+
+  }
+  /* randomly decide the type of pixel */
+  function _buildWall() {
+    var x, y, randX, randY, currentPx;
+
+    for (var i = 0; i < 20; i++) { // build x walls
+      x = Math.floor( Math.random() * (options.col));
+      y = Math.floor( Math.random() * (options.row));
+      while (1) { // break manulay when meet an incompatible px
+        currentPx = container.find('#px' + x + '_' + y);
+        if(currentPx.length === 0 || currentPx.hasClass('wall') || currentPx.data('type') !== 0) {
+          break;
+        }
+        currentPx.addClass('wall');
+
+        if(Math.random() > 0.6 || randX === undefined) { // direction don't always change
+          randX = Math.floor( Math.random() * 3) - 1; // between -1 and 1
+          randY = Math.floor( Math.random() * 3) - 1;
+        }
+        x += randX;
+        y += randY;
+      }
+    }
   }
   /* randomly decide the type of pixel
    * 0 : default
-   * 1 : wall  10/50
+   * 1 : unused for now
    * 2 : bonus 1/50
    * 3 : malus 1/50
    */
@@ -70,9 +99,6 @@
     } else if (rand < 40) {
       px.data('type', 3);
       px.addClass('malus');
-    } else if (rand < 240) {
-      px.data('type', 1);
-      px.addClass('wall');
     } else {
       px.data('type', 0);
     }
@@ -122,15 +148,21 @@
           _lightAMatch(6);
         }
         break;
+      case "g": // god light used for debug
+        e.preventDefault();
+        _lightAMatch(50);
+        break;
       default:
         console.log(e);
         break;
     }
   }
   /* light a match to reveal the nearvy pixels */
-  function _lightAMatch(range) {
-    var currentPx = container.find('.cpx'),
-        currentX  = currentPx.data('x'),
+  function _lightAMatch(range, currentPx) {
+    if(currentPx === undefined) {
+      currentPx = container.find('.cpx');
+    }
+    var currentX  = currentPx.data('x'),
         currentY  = currentPx.data('y'),
         targetPx, targetX, targetY, x, y;
 
