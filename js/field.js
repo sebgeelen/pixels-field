@@ -16,6 +16,8 @@
     return;
   }
 
+  var matchAvailable, torchRange;
+
   // init the field
   function init (opt) {
 
@@ -23,12 +25,22 @@
       jQuery.extend(options, opt);
     }
 
-    container = $(options.container);
+    container      = $(options.container);
+    torchRange     = options.torchRange;
+    matchAvailable = options.matchAvailable;
 
     _initFieldPixels();
     _initKeyBinding();
+
+    container.trigger('newGame');
   }
-  function _reset() {
+  function _reset(won) {
+    if (won) {
+      container.trigger('gameWon');
+    } else{
+      container.trigger('gameLost');
+    }
+
     container.empty();
     init(options);
   }
@@ -109,30 +121,31 @@
 
     switch(type) {
       case 2:
-        _applyBonusToPx(px);
+        _applyBonus(px);
         break;
       case 3:
-        _applyMalusToPx(px);
+        _applyMalus(px);
         break;
       default:
-        _lightAMatch(options.torchRange);
+        _lightAMatch(torchRange);
         break;
     }
   }
 
-  function _applyBonusToPx(px) {
+  function _applyBonus(px) {
     var r = Math.random();
     if(r > 0.4) {
-      _lightAMatch(options.torchRange + 2);
+      _lightAMatch(torchRange + 2);
     } else if(r > 0.2) {
-      _lightAMatch(options.torchRange + 4);
+      _lightAMatch(torchRange + 4);
     } else {
-      options.torchRange ++;
-      _lightAMatch(options.torchRange);
+      torchRange ++;
+      _lightAMatch(torchRange);
     }
+    px.data('type', 0).data("oldType", 2);
   }
 
-  function _applyMalusToPx(px) {
+  function _applyMalus(px) {
     var r = Math.random();
     if(r > 0.2) {
       _matchFireOut();
@@ -140,12 +153,12 @@
       // karma is a bitch
       _matchFireOut();
       _removeVisited();
-      options.torchRange --;
+      torchRange --;
     }
 
-    if(options.torchRange < 0) {
+    if(torchRange < 0) {
       //prevent range to become negative
-      options.torchRange = 0;
+      torchRange = 0;
     }
   }
   /* bind keys */
@@ -176,14 +189,15 @@
         break;
       case "l": // light a match
         e.preventDefault();
-        if(options.matchAvailable > 0) {
-          options.matchAvailable --;
+        if(matchAvailable > 0) {
+          matchAvailable --;
           _lightAMatch(6);
+          container.trigger('newMatch');
         }
         break;
       case "g": // god light used for debug
         e.preventDefault();
-        _lightAMatch(50);
+        //_lightAMatch(50);
         break;
       default:
         console.log(e);
@@ -234,6 +248,8 @@
         targetPx  = container.find('#px' + targetX + '_' + targetY);
 
     if(targetPx.length > 0) {
+      container.trigger('newMove');
+
       if(targetPx.hasClass("wall")) {
         // don't move ibto wall wall
         targetPx.addClass("visited");
@@ -251,7 +267,7 @@
 
     if (isEndPx) {
       alert("Congrats, you won this game.");
-      _reset();
+      _reset(true);
     }
   }
 
