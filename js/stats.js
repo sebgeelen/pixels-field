@@ -1,6 +1,7 @@
 (function(context, namespace) {
   var options = {
     "container"    : null,
+    "ui"           : null,
     "gamesCount"   : 0,
     "movesCount"   : 0,
     "matchesCount" : 2,
@@ -9,7 +10,7 @@
   };
 
   var _stats    = context[namespace],
-      container;
+      container, uiContainer;
 
   if (_stats) { // singleton
     return;
@@ -26,8 +27,14 @@
     }
 
     container      = $(options.container);
+    uiContainer    = $(options.ui);
 
     _initEventsListeners();
+    _statsChanged();
+  }
+
+  function _statsChanged() {
+    uiContainer.trigger('statsChanged');
   }
 
   /* bind keys */
@@ -50,36 +57,54 @@
     cGameMatches = 0;
 
     options.gamesCount ++;
+
+    _statsChanged();
   }
   function _incrementMove(e) {
     cGameMoves ++;
     options.movesCount ++;
+
+    _statsChanged();
   }
   function _incrementMatch(e) {
     console.log('m++');
     cGameMatches ++;
     options.matchesCount ++;
+
+    _statsChanged();
   }
 
   function _gameWon(e) {
     _storeGameInHistory(true);
+    _statsChanged();
   }
   function _gameLost(e) {
     _storeGameInHistory(false);
+    _statsChanged();
   }
-  function _storeGameInHistory(won) {
+
+  function _storeGameInHistory(isVictory) {
     var time = new Date().getTime();
     options.GamesHistory[time] = {
       "movesCount"   : cGameMoves,
       "matchesCount" : cGameMatches,
-      "victory"      : won
+      "victory"      : isVictory
     };
   }
 
-
   // define the public methods and vars
-  var stats        = {};
-      stats.init   = init;
+  function get(data) {
+    return this[data];
+  }
+
+
+  var stats     = {};
+
+  stats.init    = init;
+  stats.get     = get;
+
+  stats.cGameMoves     = cGameMoves;
+  stats.cGameMatches   = cGameMatches;
 
   _stats                  = stats;
   context[namespace]      = _stats;

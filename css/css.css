@@ -1,4 +1,6 @@
-#field{padding:20px;background-color:#444;text-align:center;}
+body{background-color:#eee;}
+#container{text-align:right;padding:60px;}
+#field{display:inline-block;padding:5px;background-color:#444;}
 .px{display:inline-block;width:10px;height:10px;background-color:#444;margin:2px;transition:background-color 0.3s linear;}
 .highlighted{background-color:#aaa;}.highlighted.bonus{background-color:#a9c7ab;}
 .highlighted.wall{background-color:#222;}

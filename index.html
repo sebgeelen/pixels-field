@@ -6,16 +6,25 @@
 
 	<script type="text/javascript" src="./js/libs/jquery-2.0.3.min.js"></script>
 
-  <script type="text/javascript" src="./js/field.js"></script>
   <script type="text/javascript" src="./js/stats.js"></script>
+  <script type="text/javascript" src="./js/ui.js"></script>
+  <script type="text/javascript" src="./js/field.js"></script>
 
   <script type="text/javascript" src="./js/init.js"></script>
 
 </head>
 <body>
   <div id="wrapper">
-    <div id="ui">
+    <div id="container">
       <div id="field"></div>
+      <div id="ui">
+        <div class="move">
+          <span class="data-binded" data-binded="cGameMoves"></span> moves
+        </div>
+        <div class="match">
+          <span class="data-binded" data-binded="cGameMatches"></span> matches left
+        </div>
+      </div>
     </div>
   </div>
 </body>

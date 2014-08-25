@@ -273,8 +273,9 @@
 
 
   // define the public methods and vars
-  var field        = {};
-      field.init   = init;
+  var field    = {};
+
+  field.init   = init;
 
   _field                  = field;
   context[namespace]      = _field;
