@@ -1,6 +1,8 @@
 (function(context, namespace) {
   var options = {
-    "container"    : null
+    'container'      : null,
+    'stats'          : null,
+    'matchesPerGame' : 2
   };
 
   var _ui    = context[namespace],
@@ -36,9 +38,19 @@
   }
 
   function _updateDataBinded() {
-    var obj        = $(this),
-        dataBinded = obj.data("binded"),
-        value      = pxStats.get(dataBinded);
+    var obj           = $(this),
+        dataDefault   = obj.data("default") || false,
+        dataOperation = obj.data("operation") || '+',
+        dataBinded    = obj.data("binded"),
+        value         = options.stats.get(dataBinded);
+
+    if (dataDefault) {
+      if (dataOperation == '-') {
+        value = options[dataDefault] - value;
+      } else {
+        value = options[dataDefault] + value;
+      }
+    }
 
     obj.text(value);
   }

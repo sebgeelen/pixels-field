@@ -18,11 +18,15 @@
     <div id="container">
       <div id="field"></div>
       <div id="ui">
-        <div class="move">
-          <span class="data-binded" data-binded="cGameMoves"></span> moves
+        <div class="move value-c">
+          <div class="key-c"><img src="./img/key_arrows.svg" width="74" height="74"></div>
+          Moves
+          <span class="value data-binded" data-binded="cGameMoves"></span>
         </div>
-        <div class="match">
-          <span class="data-binded" data-binded="cGameMatches"></span> matches left
+        <div class="match value-c">
+          <div class="key-c"><img src="./img/key_L.svg" width="40" height="62"></div>
+          Matches left
+          <span class="value data-binded" data-default="matchesPerGame" data-operation="-" data-binded="cGameMatches"></span>
         </div>
       </div>
     </div>

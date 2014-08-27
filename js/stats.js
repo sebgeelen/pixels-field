@@ -31,6 +31,8 @@
 
     _initEventsListeners();
     _statsChanged();
+
+    return this;
   }
 
   function _statsChanged() {
@@ -94,7 +96,7 @@
 
   // define the public methods and vars
   function get(data) {
-    return this[data];
+    return eval(data);
   }
 
 
@@ -102,9 +104,6 @@
 
   stats.init    = init;
   stats.get     = get;
-
-  stats.cGameMoves     = cGameMoves;
-  stats.cGameMatches   = cGameMatches;
 
   _stats                  = stats;
   context[namespace]      = _stats;

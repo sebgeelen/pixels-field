@@ -1,15 +1,22 @@
 $(function() {
+
+  var matchesPerGame = 2;
+
+
   // init stats listener
-  pxStats.init({
-    'container' : '#field',
-    'ui'        : '#ui'
+  var stats = pxStats.init({
+    'container'       : '#field',
+    'ui'              : '#ui'
   });
   // init user interface
-  pxUi.init({
-    'container' : '#ui'
+  var ui = pxUi.init({
+    'container'       : '#ui',
+    'stats'           : stats,
+    'matchesPerGame'  : matchesPerGame
   });
   // init game field
-  pxField.init({
-    'container' : '#field'
+  var field = pxField.init({
+    'container'       : '#field',
+    'matchAvailable'  : matchesPerGame
   });
 });
