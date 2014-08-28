@@ -1,8 +1,13 @@
+@blue  : #186591;
+@red   : #913418;
+@green : #409118;
+
+
 // main containers
 body {
   background-color: #eee;
   font-family: helvetica, "Helvetica neue", Arial, sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 20px;
 }
 
@@ -17,25 +22,78 @@ body {
   text-align: right;
 }
 
+.message-box {
+  position: absolute;
+  display: none;
+  opacity: 1;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: 40px 10px;
+
+  font-size: 18px;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 600;
+
+  color: #fff;
+  background: @blue;
+
+  transition: opacity  .8s linear;
+  span {
+    display: block;
+    font-size: 13px;
+    font-weight: 400;
+    padding-top: 40px;
+  }
+  &.open {
+    display: block;
+  }
+  &.fade {
+    opacity: 0;
+  }
+  &.good {
+    background: @green;
+  }
+  &.bad {
+    background: @red;
+  }
+}
+
 // user interface
 
 #ui {
   position: absolute;
 
   top: 60px;
-  left: 60px;
+  left: 0;
 
   width: 100px;
 
   text-align: center;
+  text-transform: uppercase;
 
   >div {
     min-height: 80px;
     padding: 10px;
     margin-bottom: 10px;
 
-    background-color: #186591;
+    background-color: @blue;
     color: #fff;
+    &.button {
+      min-height: 45px;
+      opacity: .7;
+      cursor: pointer;
+      &:hover {
+        opacity: 1;
+      }
+    }
+    &.achievements {
+      background: @green;
+    }
   }
   .value {
     display: block;
@@ -43,6 +101,7 @@ body {
     font-size: 36px;
     line-height: 54px;
     font-weight: 600;
+
   }
 
   .key-c {
@@ -58,6 +117,7 @@ body {
 // game field
 #field {
   display: inline-block;
+  position: relative;
   padding: 5px;
   background-color: #444;
 }
@@ -104,4 +164,9 @@ body {
 .px.cpx {
   transition: background-color .1s linear;
   background-color: #1a82c4;
+}
+
+// achievement
+#achievements {
+  display: none;
 }

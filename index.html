@@ -16,7 +16,8 @@
 <body>
   <div id="wrapper">
     <div id="container">
-      <div id="field"></div>
+      <div id="field">
+      </div>
       <div id="ui">
         <div class="move value-c">
           <div class="key-c"><img src="./img/key_arrows.svg" width="74" height="74"></div>
@@ -25,10 +26,15 @@
         </div>
         <div class="match value-c">
           <div class="key-c"><img src="./img/key_L.svg" width="40" height="62"></div>
-          Matches left
+          Matches
           <span class="value data-binded" data-default="matchesPerGame" data-operation="-" data-binded="cGameMatches"></span>
         </div>
+        <div class="button reset" data-target="reset">Reset</div>
+        <div class="button achievements" data-target="showAchievements">achievements</div>
       </div>
+    </div>
+    <div id="achievements">
+      hello world
     </div>
   </div>
 </body>

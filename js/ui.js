@@ -2,7 +2,8 @@
   var options = {
     'container'      : null,
     'stats'          : null,
-    'matchesPerGame' : 2
+    'matchesPerGame' : 2,
+    'messageBox'     : null
   };
 
   var _ui    = context[namespace],
@@ -23,7 +24,6 @@
     }
 
     container      = $(options.container);
-    uiContainer    = $(options.ui);
 
     _initEventsListeners();
   }
@@ -31,6 +31,11 @@
   /* bind keys */
   function _initEventsListeners() {
     container.off('statsChanged').on('statsChanged', _updateAllDataBinded);
+    container.find('.button').on('click', _buttonPressed);
+  }
+
+  function _buttonPressed(e) {
+    console.log(e);
   }
 
   function _updateAllDataBinded() {
@@ -55,11 +60,35 @@
     obj.text(value);
   }
 
+  function displayBigMessage(message, type, delay) {
+    messageBox = $(".message-box");
+
+    messageBox.addClass('open').html(message);
+
+    if(type !== undefined) {
+      messageBox.addClass(type);
+    } else {
+      type = "";
+    }
+    if(delay === undefined) {
+      delay = 1000;
+    }
+
+    window.setTimeout(function() {
+      messageBox.addClass("fade");
+      window.setTimeout(function() {
+        messageBox.removeClass("open fade " + type);
+      }, 1000);
+    }, delay);
+
+  }
+
 
   // define the public methods and vars
   var ui    = {};
 
-  ui.init   = init;
+  ui.init              = init;
+  ui.displayMessage    = displayBigMessage;
 
   _ui                  = ui;
   context[namespace]   = _ui;

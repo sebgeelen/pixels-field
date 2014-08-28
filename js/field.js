@@ -1,10 +1,10 @@
 (function(context, namespace) {
   var options = {
     "container"         : null,
-    "col"               : 9,
-    "row"               : 40,
-    "start"             : "4:4",
-    "end"               : "4:35",
+    "col"               : 13,
+    "row"               : 35,
+    "start"             : "6:6",
+    "end"               : "6:30",
     "matchAvailable"    : 2,
     "torchRange"        : 1
   };
@@ -32,17 +32,20 @@
     _initFieldPixels();
     _initKeyBinding();
 
+    container.append('<div class="message-box"></div>');
     container.trigger('newGame');
   }
   function _reset(won) {
-    if (won) {
-      container.trigger('gameWon');
-    } else{
-      container.trigger('gameLost');
-    }
-
     container.empty();
     init(options);
+
+    if (won) {
+      pxUi.displayMessage('You win!');
+      container.trigger('gameWon');
+    } else{
+      pxUi.displayMessage('You loose!<span>bouuuuuuhhh</span>');
+      container.trigger('gameLost');
+    }
   }
   /* init the board pixels map */
   function _initFieldPixels() {
@@ -133,6 +136,7 @@
   }
 
   function _applyBonus(px) {
+    pxUi.displayMessage('Bonus', 'good', 200);
     var r = Math.random();
     if(r > 0.4) {
       _lightAMatch(torchRange + 2);
@@ -146,6 +150,7 @@
   }
 
   function _applyMalus(px) {
+    pxUi.displayMessage('Malus', 'bad', 200);
     var r = Math.random();
     if(r > 0.2) {
       _matchFireOut();
@@ -192,6 +197,7 @@
         if(matchAvailable > 0) {
           matchAvailable --;
           _lightAMatch(6);
+          pxUi.displayMessage('Light please', '', 200);
           container.trigger('newMatch');
         }
         break;
@@ -266,7 +272,6 @@
     var isEndPx  = px.hasClass('px-end');
 
     if (isEndPx) {
-      alert("Congrats, you won this game.");
       _reset(true);
     }
   }

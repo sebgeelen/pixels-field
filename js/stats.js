@@ -69,7 +69,6 @@
     _statsChanged();
   }
   function _incrementMatch(e) {
-    console.log('m++');
     cGameMatches ++;
     options.matchesCount ++;
 
