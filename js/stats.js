@@ -4,13 +4,12 @@
     "ui"           : null,
     "gamesCount"   : 0,
     "movesCount"   : 0,
-    "flashsCount" : 2,
-    "GamesHistory" : {},
+    "flashsCount"  : 2,
     "badges"       : {}
   };
 
   var _stats    = context[namespace],
-      container, uiContainer;
+      container, uiContainer, gamesHistory;
 
   if (_stats) { // singleton
     return;
@@ -28,6 +27,11 @@
 
     container      = $(options.container);
     uiContainer    = $(options.ui);
+
+    gamesHistory = JSON.parse(localStorage.getItem("pxf_gamesHistory"));
+    if (typeof gamesHistory !== "object" || gamesHistory === null) {
+      gamesHistory = {};
+    }
 
     _initEventsListeners();
     _statsChanged();
@@ -50,10 +54,6 @@
   }
 
   function _newGame(e) {
-    console.log(options);
-    console.log('cGameFlashs : ' + cGameFlashs);
-    console.log('cGameMoves : ' + cGameMoves);
-    console.log('----------------------------');
 
     cGameMoves   = 0;
     cGameFlashs = 0;
@@ -86,18 +86,25 @@
 
   function _storeGameInHistory(isVictory) {
     var time = new Date().getTime();
-    options.GamesHistory[time] = {
+    gamesHistory[time] = {
       "movesCount"   : cGameMoves,
-      "flashsCount" : cGameFlashs,
+      "flashsCount"  : cGameFlashs,
       "victory"      : isVictory
     };
+
+    _saveCurrentData();
+  }
+
+  function _saveCurrentData() {
+    // add a  onBeforeUnload event save this
+    // to reduce cheat
+    localStorage.setItem("pxf_gamesHistory", JSON.stringify(gamesHistory));
   }
 
   // define the public methods and vars
   function get(data) {
     return eval(data);
   }
-
 
   var stats     = {};
 
