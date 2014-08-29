@@ -2,19 +2,19 @@
   var options = {
     'container'      : null,
     'stats'          : null,
-    'matchesPerGame' : 2,
+    'flashsPerGame' : 2,
     'messageBox'     : null
   };
 
   var _ui    = context[namespace],
-      container;
+      container, mainScreen, achievementsScreen;
 
   if (_ui) { // singleton
     return;
   }
 
   var cGameMoves   = 0,
-      cGameMatches = 0;
+      cGameFlashs = 0;
 
   // init the ui
   function init (opt) {
@@ -23,7 +23,10 @@
       jQuery.extend(options, opt);
     }
 
-    container      = $(options.container);
+    container           = $(options.container);
+
+    mainScreen          = $(options.mainScreen);
+    achievementsScreen  = $(options.achievementsScreen);
 
     _initEventsListeners();
   }
@@ -32,10 +35,21 @@
   function _initEventsListeners() {
     container.off('statsChanged').on('statsChanged', _updateAllDataBinded);
     container.find('.button').on('click', _buttonPressed);
+    achievementsScreen.find('.button').on('click', _buttonPressed);
   }
 
   function _buttonPressed(e) {
-    console.log(e);
+    button = $(this);
+    target = button.data("target");
+    if(target) {
+      console.log(target);
+      eval(target);
+    }
+  }
+
+  function _toggleAchievementsScreen() {
+    mainScreen.toggleClass('current');
+    achievementsScreen.toggleClass('current');
   }
 
   function _updateAllDataBinded() {

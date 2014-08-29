@@ -12,6 +12,7 @@ body {
 }
 
 #container {
+  display: none;
   position: relative;
 
   width: 310px;
@@ -20,6 +21,9 @@ body {
   margin: auto;
 
   text-align: right;
+  &.current {
+    display: block;
+  }
 }
 
 .message-box {
@@ -169,4 +173,73 @@ body {
 // achievement
 #achievements {
   display: none;
+  text-transform: uppercase;
+  &.current {
+    display: block;
+  }
+
+  .button {
+    display: block;
+
+    margin-bottom: 20px;
+
+    font-size: 30px;
+    line-height: 54px;
+
+    background: @blue;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    opacity: .7;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.achievements-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  max-height: ~"calc(100% - 84px)";
+  overflow-x: auto;
+
+  color: #fff;
+
+  .entry {
+    background: #999;
+
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+
+    text-align: center;
+    cursor: default;
+
+    &.unlock {
+      background: @green;
+    }
+  }
+  .title {
+    display: block;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    margin-top: 20px;
+  }
+  .description {
+    display: none;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 10px;
+  }
+  .unlock:hover {
+    .title {
+      display: none;
+    }
+    .description {
+      display: block;
+    }
+  }
 }

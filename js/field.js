@@ -5,7 +5,7 @@
     "row"               : 35,
     "start"             : "6:6",
     "end"               : "6:30",
-    "matchAvailable"    : 2,
+    "flashAvailable"    : 2,
     "torchRange"        : 1
   };
 
@@ -16,7 +16,7 @@
     return;
   }
 
-  var matchAvailable, torchRange;
+  var flashAvailable, torchRange;
 
   // init the field
   function init (opt) {
@@ -27,7 +27,7 @@
 
     container      = $(options.container);
     torchRange     = options.torchRange;
-    matchAvailable = options.matchAvailable;
+    flashAvailable = options.flashAvailable;
 
     _initFieldPixels();
     _initKeyBinding();
@@ -73,9 +73,9 @@
     }
     _buildWall();
     // light around the start
-    _lightAMatch(1);
+    _lightAFlash(1);
     // light around the end
-    _lightAMatch(2, container.find('.px-end'));
+    _lightAFlash(2, container.find('.px-end'));
 
   }
   /* randomly decide the type of pixel */
@@ -130,7 +130,7 @@
         _applyMalus(px);
         break;
       default:
-        _lightAMatch(torchRange);
+        _lightAFlash(torchRange);
         break;
     }
   }
@@ -139,12 +139,12 @@
     pxUi.displayMessage('Bonus', 'good', 200);
     var r = Math.random();
     if(r > 0.4) {
-      _lightAMatch(torchRange + 2);
+      _lightAFlash(torchRange + 2);
     } else if(r > 0.2) {
-      _lightAMatch(torchRange + 4);
+      _lightAFlash(torchRange + 4);
     } else {
       torchRange ++;
-      _lightAMatch(torchRange);
+      _lightAFlash(torchRange);
     }
     px.data('type', 0).data("oldType", 2);
   }
@@ -153,10 +153,10 @@
     pxUi.displayMessage('Malus', 'bad', 200);
     var r = Math.random();
     if(r > 0.2) {
-      _matchFireOut();
+      _flashFireOut();
     } else {
       // karma is a bitch
-      _matchFireOut();
+      _flashFireOut();
       _removeVisited();
       torchRange --;
     }
@@ -192,26 +192,26 @@
       case " ":
         _reset();
         break;
-      case "l": // light a match
+      case "f": // flash
         e.preventDefault();
-        if(matchAvailable > 0) {
-          matchAvailable --;
-          _lightAMatch(6);
+        if(flashAvailable > 0) {
+          flashAvailable --;
+          _lightAFlash(6);
           pxUi.displayMessage('Light please', '', 200);
-          container.trigger('newMatch');
+          container.trigger('newFlash');
         }
         break;
       case "g": // god light used for debug
         e.preventDefault();
-        //_lightAMatch(50);
+        //_lightAFlash(50);
         break;
       default:
         console.log(e);
         break;
     }
   }
-  /* light a match to reveal the nearvy pixels */
-  function _lightAMatch(range, currentPx) {
+  /* light a flash to reveal the nearvy pixels */
+  function _lightAFlash(range, currentPx) {
     if(currentPx === undefined) {
       currentPx = container.find('.cpx');
     }
@@ -232,12 +232,12 @@
       }
     }
 
-    //setTimeout(_matchFireOut, 5000);
+    //setTimeout(_flashFireOut, 5000);
   }
-  function _matchFireOut() {
+  function _flashFireOut() {
     container.find('.highlighted').removeClass('highlighted');
     // keep light around the end
-    _lightAMatch(2, container.find('.px-end'));
+    _lightAFlash(2, container.find('.px-end'));
   }
 
   function _removeVisited() {
@@ -281,6 +281,7 @@
   var field    = {};
 
   field.init   = init;
+  field.reset  = _reset;
 
   _field                  = field;
   context[namespace]      = _field;

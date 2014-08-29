@@ -1,5 +1,5 @@
 body{background-color:#eee;font-family:helvetica,"Helvetica neue",Arial,sans-serif;font-size:12px;line-height:20px;}
-#container{position:relative;width:310px;padding-top:60px;margin:auto;text-align:right;}
+#container{display:none;position:relative;width:310px;padding-top:60px;margin:auto;text-align:right;}#container.current{display:block;}
 .message-box{position:absolute;display:none;opacity:1;top:0;bottom:0;left:0;right:0;padding:40px 10px;font-size:18px;text-transform:uppercase;text-align:center;font-weight:600;color:#fff;background:#186591;transition:opacity .8s linear;}.message-box span{display:block;font-size:13px;font-weight:400;padding-top:40px;}
 .message-box.open{display:block;}
 .message-box.fade{opacity:0;}
@@ -19,4 +19,10 @@ body{background-color:#eee;font-family:helvetica,"Helvetica neue",Arial,sans-ser
 .visited.wall{background-color:#222;}
 .px.px-end{background-color:#194e70;}
 .px.cpx{transition:background-color 0.1s linear;background-color:#1a82c4;}
-#achievements{display:none;}
+#achievements{display:none;text-transform:uppercase;}#achievements.current{display:block;}
+#achievements .button{display:block;margin-bottom:20px;font-size:30px;line-height:54px;background:#186591;color:#fff;text-align:center;cursor:pointer;opacity:.7;}#achievements .button:hover{opacity:1;}
+.achievements-list{display:flex;justify-content:space-between;flex-wrap:wrap;max-height:calc(100% - 84px);overflow-x:auto;color:#fff;}.achievements-list .entry{background:#999;width:100px;height:100px;margin-bottom:10px;text-align:center;cursor:default;}.achievements-list .entry.unlock{background:#409118;}
+.achievements-list .title{display:block;font-weight:600;font-size:18px;line-height:28px;margin-top:20px;}
+.achievements-list .description{display:none;font-size:12px;line-height:14px;padding:10px;}
+.achievements-list .unlock:hover .title{display:none;}
+.achievements-list .unlock:hover .description{display:block;}

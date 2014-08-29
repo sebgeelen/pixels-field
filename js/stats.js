@@ -4,7 +4,7 @@
     "ui"           : null,
     "gamesCount"   : 0,
     "movesCount"   : 0,
-    "matchesCount" : 2,
+    "flashsCount" : 2,
     "GamesHistory" : {},
     "badges"       : {}
   };
@@ -17,7 +17,7 @@
   }
 
   var cGameMoves   = 0,
-      cGameMatches = 0;
+      cGameFlashs = 0;
 
   // init the stats
   function init (opt) {
@@ -43,7 +43,7 @@
   function _initEventsListeners() {
     container.off('newGame').on('newGame', _newGame);
     container.off('newMove').on('newMove', _incrementMove);
-    container.off('newMatch').on('newMatch', _incrementMatch);
+    container.off('newFlash').on('newFlash', _incrementFlash);
 
     container.off('gameWon').on('gameWon', _gameWon);
     container.off('gameLost').on('gameLost', _gameLost);
@@ -51,12 +51,12 @@
 
   function _newGame(e) {
     console.log(options);
-    console.log('cGameMatches : ' + cGameMatches);
+    console.log('cGameFlashs : ' + cGameFlashs);
     console.log('cGameMoves : ' + cGameMoves);
     console.log('----------------------------');
 
     cGameMoves   = 0;
-    cGameMatches = 0;
+    cGameFlashs = 0;
 
     options.gamesCount ++;
 
@@ -68,9 +68,9 @@
 
     _statsChanged();
   }
-  function _incrementMatch(e) {
-    cGameMatches ++;
-    options.matchesCount ++;
+  function _incrementFlash(e) {
+    cGameFlashs ++;
+    options.flashsCount ++;
 
     _statsChanged();
   }
@@ -88,7 +88,7 @@
     var time = new Date().getTime();
     options.GamesHistory[time] = {
       "movesCount"   : cGameMoves,
-      "matchesCount" : cGameMatches,
+      "flashsCount" : cGameFlashs,
       "victory"      : isVictory
     };
   }

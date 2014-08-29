@@ -2,7 +2,6 @@
 <head>
 	<meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="./css/css.css" />
-  <link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css" />
 
 	<script type="text/javascript" src="./js/libs/jquery-2.0.3.min.js"></script>
 
@@ -15,7 +14,7 @@
 </head>
 <body>
   <div id="wrapper">
-    <div id="container">
+    <div id="container" class="current">
       <div id="field">
       </div>
       <div id="ui">
@@ -24,17 +23,58 @@
           Moves
           <span class="value data-binded" data-binded="cGameMoves"></span>
         </div>
-        <div class="match value-c">
-          <div class="key-c"><img src="./img/key_L.svg" width="40" height="62"></div>
-          Matches
-          <span class="value data-binded" data-default="matchesPerGame" data-operation="-" data-binded="cGameMatches"></span>
+        <div class="flash value-c">
+          <div class="key-c"><img src="./img/key_F.svg" width="40" height="62"></div>
+          Flash
+          <span class="value data-binded" data-default="flashsPerGame" data-operation="-" data-binded="cGameFlashs"></span>
         </div>
-        <div class="button reset" data-target="reset">Reset</div>
-        <div class="button achievements" data-target="showAchievements">achievements</div>
+        <div class="button reset" data-target="pxField.reset()">Reset</div>
+        <div class="button achievements" data-target="_toggleAchievementsScreen()">achievements</div>
       </div>
     </div>
     <div id="achievements">
-      hello world
+      <div class="button back" data-target="_toggleAchievementsScreen()">back to Game</div>
+      <div class="achievements-list">
+        <div class="entry unlock">
+          <span class="title">Tester</span>
+          <span class="description">You've been part of the test of this awesome game </span>
+        </div>
+
+        <div class="entry unlock">
+          <span class="title">Neewbie</span>
+          <span class="description">You won your first game.</span>
+        </div>
+        <div class="entry">
+          <span class="title">Captain</span>
+          <span class="description">You won 15 game.</span>
+        </div>
+        <div class="entry">
+          <span class="title">Colonel</span>
+          <span class="description">You won 50 game.</span>
+        </div>
+        <div class="entry">
+          <span class="title">General</span>
+          <span class="description">You won 100 game.</span>
+        </div>
+
+        <div class="entry">
+          <span class="title">Loosie</span>
+          <span class="description">You just lost your first game.</span>
+        </div>
+        <div class="entry">
+          <span class="title">Looser</span>
+          <span class="description">You lost 15 game.</span>
+        </div>
+        <div class="entry">
+          <span class="title">Loose Angel</span>
+          <span class="description">You won 50 game.</span>
+        </div>
+        <div class="entry">
+          <span class="title">God of loosers</span>
+          <span class="description">You won 100 game.</span>
+        </div>
+
+      </div>
     </div>
   </div>
 </body>
