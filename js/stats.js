@@ -1,15 +1,16 @@
 (function(context, namespace) {
   var options = {
-    "container"    : null,
-    "ui"           : null,
-    "gamesCount"   : 0,
-    "movesCount"   : 0,
-    "flashsCount"  : 2,
-    "badges"       : {}
+    "container"       : null,
+    "ui"              : null,
+    "gamesCount"      : 0,
+    "movesCount"      : 0,
+    "flashsCount"     : 2,
+    "badges"          : {},
+    "achievementsDB"  : {}
   };
 
   var _stats    = context[namespace],
-      container, uiContainer, gamesHistory;
+      container, uiContainer, gamesHistory, achievements;
 
   if (_stats) { // singleton
     return;
@@ -28,10 +29,7 @@
     container      = $(options.container);
     uiContainer    = $(options.ui);
 
-    gamesHistory = JSON.parse(localStorage.getItem("pxf_gamesHistory"));
-    if (typeof gamesHistory !== "object" || gamesHistory === null) {
-      gamesHistory = {};
-    }
+    _initLocalStorageData();
 
     _initEventsListeners();
     _statsChanged();
@@ -92,13 +90,36 @@
       "victory"      : isVictory
     };
 
+    _calculAchievements();
     _saveCurrentData();
+  }
+  function _initLocalStorageData() {
+
+    gamesHistory = JSON.parse(localStorage.getItem("pxf_gamesHistory"));
+    if (typeof gamesHistory !== "object" || gamesHistory === null) {
+      gamesHistory = {};
+    }
+
+    achievements = JSON.parse(localStorage.getItem("pxf_achievementss"));
+    if (typeof achievements !== "object" || achievements === null) {
+      achievements = {};
+    }
   }
 
   function _saveCurrentData() {
     // add a  onBeforeUnload event save this
     // to reduce cheat
     localStorage.setItem("pxf_gamesHistory", JSON.stringify(gamesHistory));
+    localStorage.setItem("pxf_achievementss", JSON.stringify(achievements));
+  }
+
+  function _calculAchievements() {
+    for (var slug in options.achievementsDB) {
+      var achievementData = options.achievementsDB[slug];
+
+      console.log(slug);
+      console.log(achievementData);
+    }
   }
 
   // define the public methods and vars

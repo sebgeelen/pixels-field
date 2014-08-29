@@ -6,7 +6,8 @@ $(function() {
   // init stats listener
   var stats = pxStats.init({
     'container'           : '#field',
-    'ui'                  : '#ui'
+    'ui'                  : '#ui',
+    'achievementsDB'      : getADB()
   });
   // init user interface
   var ui = pxUi.init({
@@ -23,3 +24,30 @@ $(function() {
     'flashAvailable'      : flashsPerGame
   });
 });
+
+function getADB() {
+  return {
+    "beta_tester" : {
+      "label" : "Tester",
+      "descr" : "You've been part of the beta test of this awesome game.",
+      "conditions" : [
+        {
+          "value"     : "1",
+          "operation" : "===",
+          "reference" : "1"
+        }
+      ]
+    },
+    "neewbie" : {
+      "label" : "Neewbie",
+      "descr" : "You won your first game.",
+      "conditions" : [
+        {
+          "value"     : "gamesHistory.keys()",
+          "operation" : ">",
+          "reference" : "0"
+        }
+      ]
+    }
+  };
+}
