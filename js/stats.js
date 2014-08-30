@@ -115,10 +115,21 @@
 
   function _calculAchievements() {
     for (var slug in options.achievementsDB) {
-      var achievementData = options.achievementsDB[slug];
+      var achievementData   = options.achievementsDB[slug],
+          achievementGet    = true;
 
-      console.log(slug);
-      console.log(achievementData);
+      for (var i in achievementData.conditions) {
+        var condition       = achievementData.conditions[i],
+            value           = eval(condition.value),
+            operation       = condition.operation,
+            reference       = eval(condition.reference),
+            conditionResult = eval(value + operation + reference);
+
+        if(!conditionResult) {
+          achievementGet    = false;
+        }
+      }
+      console.log(slug + ' result : ' +achievementGet);
     }
   }
 

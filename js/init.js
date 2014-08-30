@@ -40,12 +40,12 @@ function getADB() {
     },
     "neewbie" : {
       "label" : "Neewbie",
-      "descr" : "You won your first game.",
+      "descr" : "You played 10 games.",
       "conditions" : [
         {
-          "value"     : "gamesHistory.keys()",
-          "operation" : ">",
-          "reference" : "0"
+          "value"     : "Object.keys(gamesHistory).length",
+          "operation" : ">=",
+          "reference" : "10"
         }
       ]
     }
