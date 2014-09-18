@@ -15,7 +15,8 @@ $(function() {
     'stats'               : stats,
     'flashsPerGame'       : flashsPerGame,
     'mainScreen'          : '#container',
-    'achievementsScreen'  : '#achievements'
+    'achievementsScreen'  : '#achievements',
+    'achievementsDB'      : getADB()
 
   });
   // init game field
@@ -40,7 +41,7 @@ function getADB() {
     },
     "neewbie" : {
       "label" : "Neewbie",
-      "descr" : "You played 10 games.",
+      "descr" : "You have played 10 games.",
       "conditions" : [
         {
           "value"     : "Object.keys(gamesHistory).length",

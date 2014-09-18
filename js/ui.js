@@ -28,7 +28,21 @@
     mainScreen          = $(options.mainScreen);
     achievementsScreen  = $(options.achievementsScreen);
 
+    _buildAchievementScreen(options.achievementsDB);
     _initEventsListeners();
+  }
+
+  function _buildAchievementScreen(db) {
+    var container = achievementsScreen.find('.achievements-list'),
+        data, html;
+
+
+    for (var slug in db) {
+      data = options.achievementsDB[slug];
+      html = '<div id="a_' + slug + '" class="entry"><span class="title">' + data.label + '</span><span class="description">' + data.descr + '</span></div>';
+
+      container.append(html);
+    }
   }
 
   /* bind keys */
@@ -42,7 +56,6 @@
     button = $(this);
     target = button.data("target");
     if(target) {
-      console.log(target);
       eval(target);
     }
   }
