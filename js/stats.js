@@ -10,7 +10,7 @@
   };
 
   var _stats    = context[namespace],
-      container, uiContainer, gamesHistory, achievements;
+      container, uiContainer, gamesHistory, achievements, achievementsScreen;
 
   if (_stats) { // singleton
     return;
@@ -26,8 +26,9 @@
       jQuery.extend(options, opt);
     }
 
-    container      = $(options.container);
-    uiContainer    = $(options.ui);
+    container           = $(options.container);
+    uiContainer         = $(options.ui);
+    achievementsScreen  = $(options.achievementsScreen);
 
     _initLocalStorageData();
 
@@ -116,21 +117,43 @@
   function _calculAchievements() {
     for (var slug in options.achievementsDB) {
       var achievementData   = options.achievementsDB[slug],
-          achievementGet    = true;
+          achievementGet    = true,
+          conditions;
 
-      for (var i in achievementData.conditions) {
-        var condition       = achievementData.conditions[i],
-            value           = eval(condition.value),
-            operation       = condition.operation,
-            reference       = eval(condition.reference),
-            conditionResult = eval(value + operation + reference);
+      if(typeof achievementData.conditions === "string") {
+        conditions = [achievementData.conditions];
+      } else {
+        conditions = achievementData.conditions;
+      }
 
-        if(!conditionResult) {
-          achievementGet    = false;
+      while ( conditions.length > 0 ) {
+        var condition    = conditions.pop();
+        if(!eval(condition)) {
+          achievementGet = false;
+          break;
         }
       }
-      console.log(slug + ' result : ' +achievementGet);
+
+      if(achievementGet) {
+        achievementsScreen.find("#a_" + slug).addClass('unlock');
+        console.log(slug + ' achievement unlock. ');
+      }
     }
+  }
+
+  // achievements method
+  function playedMoreThanGame(x) {
+    return Object.keys(gamesHistory).length >= x;
+  }
+
+  function lostMoreThanGame(x) {
+    var lostCount = 0;
+    for(var i in gamesHistory) {
+      if(!gamesHistory[i].victory) {
+        lostCount++;
+      }
+    }
+    return lostCount >= x;
   }
 
   // define the public methods and vars
